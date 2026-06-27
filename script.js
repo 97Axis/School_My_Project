@@ -27,65 +27,65 @@ window.addEventListener('scroll', () => {
     let value = window.scrollY;
     let width = window.innerWidth;
 
-    // Responsive scaling factor to keep assets securely within phone viewport ranges
+    // Fluid Dampening Logic: Scales displacement based on actual viewport dimensions
     let factor = 1.0;
     if (width <= 480) {
-        factor = 0.2; 
+        factor = 0.15; // Softens speeds on phones so assets don't exit view tracking areas
     } else if (width <= 768) {
-        factor = 0.5; 
+        factor = 0.4;  // Medium adjustments for tablets
     }
 
-    // 1. Core Title Scroll Interaction
+    // 1. Core Title Parallax Engine
     if (text) {
-        let yTranslation = (value * (2.5 * factor)) - 50;
+        let yTranslation = (value * (2.0 * factor)) - 50;
         text.style.transform = `translate(-50%, ${yTranslation}px)`; 
     }
     
-    // 2. Home Page Scene Transitions
+    // 2. Home Layout Layers
     if (hill1) {
-        hill1.style.transform = `translateY(${value * -0.1 * factor}px)`;
-        hill5.style.transform = `translateX(${value * 1.5 * factor}px)`;
-        hill4.style.transform = `translateX(${value * -1.5 * factor}px)`;
+        hill1.style.transform = `translateY(${value * -0.08 * factor}px)`;
+        hill5.style.transform = `translateX(${value * 1.2 * factor}px)`;
+        hill4.style.transform = `translateX(${value * -1.2 * factor}px)`;
         
         if (leaf) {
-            leaf.style.transform = `translateY(${value * -1.5 * factor}px) translateX(${value * 1.5 * factor}px)`;
+            leaf.style.transform = `translateY(${value * -1.2 * factor}px) translateX(${value * 1.2 * factor}px)`;
         }
     } 
     
-    // 3. Culture Page Scene Transitions
+    // 3. Culture Layout Layers
     else if (mountain1) {
-        mountain1.style.transform = `translateX(${value * 0.5 * factor}px)`;
-        mountain2.style.transform = `translateX(${value * 0.3 * factor}px)`;
+        mountain1.style.transform = `translateX(${value * 0.4 * factor}px)`;
+        mountain2.style.transform = `translateX(${value * 0.2 * factor}px)`;
         
-        if (trees1) trees1.style.transform = `translateX(${value * 1.2 * factor}px)`;
-        if (trees2) trees2.style.transform = `translateX(${value * -1.2 * factor}px)`;
+        if (trees1) trees1.style.transform = `translateX(${value * 1.0 * factor}px)`;
+        if (trees2) trees2.style.transform = `translateX(${value * -1.0 * factor}px)`;
         
         if (Man) {
-            Man.style.transform = `translateX(${value * -0.5 * factor}px)`; 
+            Man.style.transform = `translateX(${value * -0.4 * factor}px)`; 
         }
     }
     
-    // 4. Sustainability Scene Transitions
+    // 4. Sustainability Layout Layers
     else if (forest) {
-        forest.style.transform = `translateY(${value * -0.05 * factor}px)`;
-        if (rocks) rocks.style.transform = `translateY(${value * -0.1 * factor}px)`;
-        if (water1) water1.style.transform = `translateY(${value * 0.05 * factor}px)`;
+        forest.style.transform = `translateY(${value * -0.04 * factor}px)`;
+        if (rocks) rocks.style.transform = `translateY(${value * -0.08 * factor}px)`;
+        if (water1) water1.style.transform = `translateY(${value * 0.04 * factor}px)`;
 
-        if (bird1) bird1.style.transform = `translateY(${value * 1.5 * factor}px) translateX(${value * -1.0 * factor}px)`;
-        if (bird2) bird2.style.transform = `translateY(${value * 0.8 * factor}px) translateX(${value * 0.5 * factor}px)`;
+        if (bird1) bird1.style.transform = `translateY(${value * 1.2 * factor}px) translateX(${value * -0.8 * factor}px)`;
+        if (bird2) bird2.style.transform = `translateY(${value * 0.6 * factor}px) translateX(${value * 0.4 * factor}px)`;
     }
     
-    // 5. Alternate Theme Page Logic
+    // 5. Alternate Night Scene Layers
     else if (moon) {
-        moon.style.transform = `translateY(${value * -0.3 * factor}px)`;
+        moon.style.transform = `translateY(${value * -0.25 * factor}px)`;
 
         if (train) {
-            train.style.transform = `translateX(${value * 1.5 * factor}px)`; 
+            train.style.transform = `translateX(${value * 1.2 * factor}px)`; 
         }
     }
 });
 
-// Dynamic orientation correction
+// Dynamic viewport recalibration engine
 window.addEventListener('resize', () => {
     if (window.innerWidth <= 768) {
         let cleanups = [hill1, hill4, hill5, leaf, mountain1, mountain2, trees1, trees2, Man, forest, rocks, water1, bird1, bird2, moon, train];
@@ -96,7 +96,7 @@ window.addEventListener('resize', () => {
     }
 });
 
-// Cinematic Intro Entry Pipeline Execution
+// Cinematic Intro Animation Pipeline Initialization
 window.addEventListener('DOMContentLoaded', () => {
     const navElement = document.querySelector('nav');
     const heroTitle = document.getElementById('text');
