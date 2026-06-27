@@ -10,6 +10,15 @@
   
   <nav>
     <div class="logo">NeoSphere</div>
+    
+    <!-- Hamburger Icon Button for Mobile Viewports -->
+    <button class="menu-toggle" aria-label="Toggle Navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <!-- Navigation container that transforms into a sliding sidebar on mobile -->
     <ul class="nav-links">
       <li><a href="index.html" class="btn">Home</a></li>
       <li><a href="technology.html" class="btn">Technology</a></li>
@@ -17,6 +26,9 @@
       <li><a href="sustainability.html" class="btn">Sustainability</a></li>
     </ul>
   </nav>
+
+  <!-- Overlay mask layer to close the menu when clicking outside of it -->
+  <div class="sidebar-overlay"></div>
 
   <div class="main-content-wrapper">
       
@@ -28,7 +40,6 @@
       <img src="Assets/hill5.png" id="hill5" alt="Background Hill 5">
       <img src="Assets/tree.png" id="tree" alt="Foreground Tree">
         
-      <!-- Left completely blank so CSS pseudo-elements handle typing mechanics neatly without double text collision -->
       <div class="animated-text" id="text"><span></span></div>
         
       <img src="Assets/leaf.png" id="leaf" alt="Floating Leaf">
