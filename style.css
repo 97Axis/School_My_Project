@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght=0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;R1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght=0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 * {
     font-family: 'Poppins', sans-serif;
@@ -341,6 +341,39 @@ section {
 }
 
 /* ==========================================================================
+   CINEMATIC INTRO ENTRY ANIMATIONS
+   ========================================================================== */
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(40px);
+    animation: fadeInUpEffect 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* Hard structural override to cleanly support text translate configurations */
+.parallax #text.fade-in-up {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 40px));
+    animation: fadeInUpTextEffect 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes fadeInUpEffect {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUpTextEffect {
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.delay-1 { animation-delay: 0.25s; }
+.delay-2 { animation-delay: 0.5s; }
+
+/* ==========================================================================
    MOBILE & TABLET RECONSTRUCTION
    ========================================================================== */
 
@@ -369,7 +402,7 @@ section {
     }
 
     .nav-links li {
-        flex: 1 1 calc(50% - 1rem); /* Formats links into a neat grid on tiny viewports */
+        flex: 1 1 calc(50% - 1rem);
         text-align: center;
     }
     
@@ -379,21 +412,19 @@ section {
         font-size: 0.85rem;
     }
     
-    /* Crucial: Prevents artwork from distorting out of scale ratios */
     .parallax {
         height: 55vh;
         min-height: 400px;
     }
     
     .parallax img {
-        width: auto;             /* Lets widescreen landscape illustrations retain depth */
-        min-width: 100vw;         /* Keeps imagery filled edge-to-edge horizontally */
-        height: 100%;            /* Keeps graphics aligned perfectly vertically */
+        width: auto;             
+        min-width: 100vw;         
+        height: 100%;            
         object-fit: cover;
-        object-position: bottom center; /* Holds base mountains down safely */
+        object-position: bottom center; 
     }
 
-    /* Centers typing animation perfectly and prevents text clipping box overflows */
     .animated-text, .full-width-title {
         font-size: 24px;
         text-align: center;
@@ -401,7 +432,7 @@ section {
     }
     
     .parallax #text {
-        top: 30%; /* Lifts title out of overlapping lower hills */
+        top: 30%; 
     }
 
     .content-intro-section {
