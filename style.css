@@ -5,7 +5,6 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    transform-style: preserve-3d;
 }
 html {
     height: 100%; 
@@ -21,7 +20,7 @@ body {
     flex-direction: column;
 }
 body.menu-open {
-    overflow: hidden; /* Lock background tracking when menu slides out */
+    overflow: hidden; /* Lock viewport scrolling when drawer is open */
 }
 
 .btn{ 
@@ -141,16 +140,15 @@ body.menu-open {
 nav{
   width: 100%;
   padding: 1rem 5%;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(11, 14, 19, 0.85);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   -webkit-backdrop-filter: blur(15px); 
   backdrop-filter: blur(15px);
-  margin-bottom: 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: relative; 
-  z-index: 2000;
+  z-index: 9999; /* Higher than background contents */
 }
 
 .logo{
@@ -166,7 +164,6 @@ nav{
   gap: 2rem;
 }
 
-/* Hidden elements by default on desktop environments */
 .menu-toggle, .sidebar-overlay {
     display: none;
 }
@@ -193,6 +190,7 @@ section {
   width: 100vw;
   margin-left: calc(50% - 50vw); 
   background-color: #0b0e13; 
+  transform-style: preserve-3d; /* Isolated here so it doesn't leak out */
 }
 
 .parallax img{
@@ -280,16 +278,17 @@ section {
 .technology-page #technology-title span::before { content: "Technology"; }
 
 /* ==========================================================================
-   MOBILE SIDEBAR SLIDE DRAWER SYSTEM
+   MOBILE SIDEBAR DRAWER SYSTEM (OPTIMIZED FOR LARGE DEVICES & TOUCH HIGHLIGHTS)
    ========================================================================== */
 
 @media (max-width: 768px) {
     nav {
+        /* Swap order so toggle is on the left and logo moves to the right */
+        flex-direction: row-reverse;
         padding: 1rem 5%;
-        margin-bottom: 0px;
     }
 
-    /* Core Hamburger Button Styling */
+    /* Hamburger Button Construction - Left Side Placement */
     .menu-toggle {
         display: flex;
         flex-direction: column;
@@ -299,7 +298,7 @@ section {
         background: transparent;
         border: none;
         cursor: pointer;
-        z-index: 3000;
+        z-index: 10005; /* Lifted above the side panel layout completely */
     }
 
     .menu-toggle span {
@@ -307,56 +306,57 @@ section {
         height: 3px;
         background-color: #38bdf8;
         border-radius: 2px;
-        transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-        transform-origin: left center;
+        transition: all 0.3s ease-in-out;
     }
 
-    /* Morphing Hamburger into an 'X' state on open */
+    /* Cross Transformation Actions */
     .menu-toggle.active span:nth-child(1) {
-        transform: rotate(45deg);
-        position: relative;
-        top: -1px;
+        transform: translateY(9px) rotate(45deg);
     }
     .menu-toggle.active span:nth-child(2) {
-        width: 0%;
         opacity: 0;
+        width: 0;
     }
     .menu-toggle.active span:nth-child(3) {
-        transform: rotate(-45deg);
-        position: relative;
-        top: 1px;
+        transform: translateY(-9px) rotate(-45deg);
     }
 
-    /* Transformation from Horizontal Row into Sidebar Panel Drawer */
+    /* Main Navigation Drawer - Slides in cleanly from the Left */
     .nav-links {
         position: fixed;
         top: 0;
-        right: 0;
+        left: 0; 
         height: 100vh;
         width: 280px;
-        background: rgba(11, 14, 19, 0.96);
-        -webkit-backdrop-filter: blur(20px);
-        backdrop-filter: blur(20px);
-        border-left: 1px solid rgba(255, 255, 255, 0.1);
+        background: #0b0e13;
+        border-right: 1px solid rgba(255, 255, 255, 0.1); 
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-end; /* Low-zone thumb alignment for larger phone displays */
         align-items: center;
-        gap: 2.5rem;
-        padding: 2rem;
-        z-index: 2500;
+        gap: 2rem;
+        padding: 2rem 2rem 6rem 2rem; 
+        z-index: 10000; /* Placed exactly beneath the hamburger menu toggle button */
         
-        /* Slide Offscreen standard positioning */
-        transform: translateX(100%);
+        /* Translate off-canvas display viewports */
+        transform: translateX(-100%);
         transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-        transform-style: flat; /* Cleans up stacking artifacts over 3D background elements */
     }
 
     .nav-links.active {
         transform: translateX(0);
-        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.7);
     }
 
-    /* Dimmed Background Overlay Shield */
+    /* List item layer visibility patch */
+    .nav-links li {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        position: relative;
+        z-index: 10001; /* Layer security to bypass ghost touch filters */
+    }
+
+    /* Tint Backdrop Blocking Shade Mask */
     .sidebar-overlay {
         display: block;
         position: fixed;
@@ -365,7 +365,7 @@ section {
         width: 100vw;
         height: 100vh;
         background: rgba(0, 0, 0, 0.6);
-        z-index: 2400;
+        z-index: 9995;
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.4s ease;
@@ -376,14 +376,18 @@ section {
         pointer-events: auto;
     }
 
+    /* Button Tapping Interface Fixes */
     .btn {
         width: 100%;
-        max-width: 200px;
-        padding: 12px 30px;
-        font-size: 0.9rem;
+        max-width: 220px; 
+        padding: 14px 30px; 
+        font-size: 0.95rem;
+        position: relative;
+        z-index: 10002; /* Forces touch screens to process target layers safely */
+        pointer-events: auto !important; /* Overrides any trailing parent container locks */
     }
 
-    /* Parallax and mobile aspect ratio constraints */
+    /* Aspect Ratio Safety Fixes for Parallax on mobile devices */
     .parallax {
         height: auto;
         min-height: auto;
