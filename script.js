@@ -27,22 +27,21 @@ window.addEventListener('scroll', () => {
     let value = window.scrollY;
     let width = window.innerWidth;
 
-    // Responsive factor: dampens movement on mobile screens to stop assets from breaking layout
+    // Responsive scaling factor to keep assets securely within phone viewport ranges
     let factor = 1.0;
     if (width <= 480) {
-        factor = 0.2; // Small phones
+        factor = 0.2; 
     } else if (width <= 768) {
-        factor = 0.5; // Tablets
+        factor = 0.5; 
     }
 
-    // 1. Core Animated Title text scaling behavior
+    // 1. Core Title Scroll Interaction
     if (text) {
-        // Keeps the initial CSS horizontal translation (-50%) safe across all screen viewports
         let yTranslation = (value * (2.5 * factor)) - 50;
         text.style.transform = `translate(-50%, ${yTranslation}px)`; 
     }
     
-    // 2. Home Page Assets Logic
+    // 2. Home Page Scene Transitions
     if (hill1) {
         hill1.style.transform = `translateY(${value * -0.1 * factor}px)`;
         hill5.style.transform = `translateX(${value * 1.5 * factor}px)`;
@@ -53,7 +52,7 @@ window.addEventListener('scroll', () => {
         }
     } 
     
-    // 3. Culture Page Assets Logic
+    // 3. Culture Page Scene Transitions
     else if (mountain1) {
         mountain1.style.transform = `translateX(${value * 0.5 * factor}px)`;
         mountain2.style.transform = `translateX(${value * 0.3 * factor}px)`;
@@ -66,7 +65,7 @@ window.addEventListener('scroll', () => {
         }
     }
     
-    // 4. Sustainability or Additional Subpage Assets Logic
+    // 4. Sustainability Scene Transitions
     else if (forest) {
         forest.style.transform = `translateY(${value * -0.05 * factor}px)`;
         if (rocks) rocks.style.transform = `translateY(${value * -0.1 * factor}px)`;
@@ -86,7 +85,7 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Resets positions dynamically if someone rotates their mobile device sideways
+// Dynamic orientation correction
 window.addEventListener('resize', () => {
     if (window.innerWidth <= 768) {
         let cleanups = [hill1, hill4, hill5, leaf, mountain1, mountain2, trees1, trees2, Man, forest, rocks, water1, bird1, bird2, moon, train];
@@ -94,5 +93,18 @@ window.addEventListener('resize', () => {
             if (el) el.style.transform = '';
         });
         if (text) text.style.transform = 'translate(-50%, -50%)';
+    }
+});
+
+// Cinematic Intro Entry Pipeline Execution
+window.addEventListener('DOMContentLoaded', () => {
+    const navElement = document.querySelector('nav');
+    const heroTitle = document.getElementById('text');
+    
+    if (navElement) {
+        navElement.classList.add('fade-in-up');
+    }
+    if (heroTitle) {
+        heroTitle.classList.add('fade-in-up', 'delay-1');
     }
 });
