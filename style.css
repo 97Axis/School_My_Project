@@ -148,7 +148,7 @@ nav{
   align-items: center;
   justify-content: space-between;
   position: relative; 
-  z-index: 9999; /* Higher than background contents */
+  z-index: 9999; 
 }
 
 .logo{
@@ -190,7 +190,7 @@ section {
   width: 100vw;
   margin-left: calc(50% - 50vw); 
   background-color: #0b0e13; 
-  transform-style: preserve-3d; /* Isolated here so it doesn't leak out */
+  transform-style: preserve-3d; 
 }
 
 .parallax img{
@@ -248,14 +248,32 @@ section {
     margin: 0 auto;   
 }
 
+/* ==========================================================================
+   FOOTER SECTION SETUP & LAYOUT WRAP CONSTRAINT
+   ========================================================================== */
 .footer {
     width: 100%;
     padding: 30px 5%; 
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+    gap: 2rem;
     background: #1f2937; 
     color: #cfd8dc; 
     border-top: 1px solid #222;
+}
+
+/* Targets the column element containing your bottom .logo */
+.footer .sec-1,
+.footer .sec_1,
+.footer div:first-of-type {
+    max-width: 300px; /* Keeps the logo/intro wrapper from expanding infinitely */
+}
+
+/* Fallback protection specifically targeting text logos in the footer grid */
+.footer .logo {
+    display: inline-block;
+    font-size: 1.8rem; /* Keeps it exactly matched to top nav size */
+    width: auto;
 }
 
 .sec-2 ul { list-style: none; }
@@ -278,17 +296,15 @@ section {
 .technology-page #technology-title span::before { content: "Technology"; }
 
 /* ==========================================================================
-   MOBILE SIDEBAR DRAWER SYSTEM (OPTIMIZED FOR LARGE DEVICES & TOUCH HIGHLIGHTS)
+   MOBILE SIDEBAR DRAWER SYSTEM
    ========================================================================== */
 
 @media (max-width: 768px) {
     nav {
-        /* Swap order so toggle is on the left and logo moves to the right */
         flex-direction: row-reverse;
         padding: 1rem 5%;
     }
 
-    /* Hamburger Button Construction - Left Side Placement */
     .menu-toggle {
         display: flex;
         flex-direction: column;
@@ -298,7 +314,7 @@ section {
         background: transparent;
         border: none;
         cursor: pointer;
-        z-index: 10005; /* Lifted above the side panel layout completely */
+        z-index: 10005; 
     }
 
     .menu-toggle span {
@@ -309,7 +325,6 @@ section {
         transition: all 0.3s ease-in-out;
     }
 
-    /* Cross Transformation Actions */
     .menu-toggle.active span:nth-child(1) {
         transform: translateY(9px) rotate(45deg);
     }
@@ -321,7 +336,6 @@ section {
         transform: translateY(-9px) rotate(-45deg);
     }
 
-    /* Main Navigation Drawer - Slides in cleanly from the Left */
     .nav-links {
         position: fixed;
         top: 0;
@@ -331,13 +345,11 @@ section {
         background: #0b0e13;
         border-right: 1px solid rgba(255, 255, 255, 0.1); 
         flex-direction: column;
-        justify-content: flex-end; /* Low-zone thumb alignment for larger phone displays */
+        justify-content: flex-end; 
         align-items: center;
         gap: 2rem;
         padding: 2rem 2rem 6rem 2rem; 
-        z-index: 10000; /* Placed exactly beneath the hamburger menu toggle button */
-        
-        /* Translate off-canvas display viewports */
+        z-index: 10000; 
         transform: translateX(-100%);
         transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     }
@@ -347,16 +359,14 @@ section {
         box-shadow: 10px 0 30px rgba(0, 0, 0, 0.7);
     }
 
-    /* List item layer visibility patch */
     .nav-links li {
         width: 100%;
         display: flex;
         justify-content: center;
         position: relative;
-        z-index: 10001; /* Layer security to bypass ghost touch filters */
+        z-index: 10001; 
     }
 
-    /* Tint Backdrop Blocking Shade Mask */
     .sidebar-overlay {
         display: block;
         position: fixed;
@@ -376,18 +386,28 @@ section {
         pointer-events: auto;
     }
 
-    /* Button Tapping Interface Fixes */
     .btn {
         width: 100%;
         max-width: 220px; 
         padding: 14px 30px; 
         font-size: 0.95rem;
         position: relative;
-        z-index: 10002; /* Forces touch screens to process target layers safely */
-        pointer-events: auto !important; /* Overrides any trailing parent container locks */
+        z-index: 10002; 
+        pointer-events: auto !important; 
     }
 
-    /* Aspect Ratio Safety Fixes for Parallax on mobile devices */
+    /* Adjust footer grid gaps on phone widths */
+    .footer {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        text-align: center;
+    }
+    .footer .sec-1,
+    .footer .sec_1,
+    .footer div:first-of-type {
+        margin: 0 auto; /* Centers the logo container block when stacked */
+    }
+
     .parallax {
         height: auto;
         min-height: auto;
