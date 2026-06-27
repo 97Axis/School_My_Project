@@ -108,3 +108,43 @@ window.addEventListener('DOMContentLoaded', () => {
         heroTitle.classList.add('fade-in-up', 'delay-1');
     }
 });
+
+// --- Existing Parallax scroll code remains here unchanged ---
+
+// ==========================================================================
+// MOBILE DRAWER ACTIVE CONTROLLER INTERACTION LOGIC
+// ==========================================================================
+document.addEventListener("DOMContentLoaded", () => {
+    const menuToggle = document.querySelector(".menu-toggle");
+    const navLinks = document.querySelector(".nav-links");
+    const sidebarOverlay = document.querySelector(".sidebar-overlay");
+    const bodyElement = document.body;
+
+    function toggleMenu() {
+        menuToggle.classList.toggle("active");
+        navLinks.classList.toggle("active");
+        sidebarOverlay.classList.toggle("active");
+        bodyElement.classList.toggle("menu-open");
+    }
+
+    function closeMenu() {
+        menuToggle.classList.remove("active");
+        navLinks.classList.remove("active");
+        sidebarOverlay.classList.remove("active");
+        bodyElement.classList.remove("menu-open");
+    }
+
+    // Trigger toggle setup when clicking the hamburger button
+    menuToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleMenu();
+    });
+
+    // Close slide layout instantly if background dimming overlay area is tapped
+    sidebarOverlay.addEventListener("click", closeMenu);
+
+    // Escape Key system cleanup for standard desktop access checks
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeMenu();
+    });
+});
